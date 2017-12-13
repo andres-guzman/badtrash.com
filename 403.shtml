@@ -1,0 +1,20 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Badtrash — Forbidden</title>
+        <meta name="description" content="Random image loader. Try it for fun x2.">        
+        <link rel="stylesheet" href="http://www.badtrash.com/css/trash_old.css">
+        <link rel="apple-touch-icon" href="http://www.badtrash.com/apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="http://www.badtrash.com//favicon.png" />
+    </head>
+    <body class="error">
+        <section class="error-holder">
+            <h1><img src="http://www.badtrash.com/img/logo.png" /></h1>
+            <h2>Error 403 - Forbidden</h2>
+            <p class="error-p">You don't have permision for that. LOL</p>
+            <a class="error-a" href="http://www.badtrash.com/">Click here to go to the main page</a>
+        </section>
+    </body>
+</html>

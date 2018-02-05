@@ -14,7 +14,7 @@
         <header>
 			<div id="header-wrapper">
 				<h1><a id="logo" href="./">Badtrash</a></h1>
-				<div id="about"><span class="glitch" data-text="Welcome">Welcome.</span> Badtrash is a simple image loader of over 5000 random, silly funny images. Click the image to load more...</div>
+				<div id="about"><span class="glitch" data-text="Welcome">Welcome.</span> Badtrash is a simple image loader of over 5000 very stupid images. Click the image to load more...</div>
 			 </div>
         </header>
 

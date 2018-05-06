@@ -23,9 +23,10 @@
 /* fade out-in & ajax load */
 $(document).on('click', '.count', function () {
     $("#random-image").fadeOut(360, function() {                   
-        $("#image-window").load("loader.php");
+        $("main").load("loader.php");
         console.log("random image loaded OK")
     });    
+
     $($(this).attr('href'));
         return false;
 });

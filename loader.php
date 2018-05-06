@@ -30,7 +30,7 @@ $type = 2;
 $beforeTotalText = "<span>Click counter: ";
 $beforeUniqueText = "Unique visits this month: ";
 $display = 1;
-$separator = "</span>";
+$separator = "</span>  /  ";
 $log_file = dirname(__FILE__) . '/' . $lf_name;
 
 if ($_GET['display'] == "true") {
@@ -162,10 +162,13 @@ function write_logfile($data, $output) {
 		echo $output;
 	}
 }
-?>
-            <div id="stats">
-                <?php echo $info; ?>
-            </div>
+?>            
             <a class="count" href="javascript:;">
                 <img id="random-image" src="<?php echo $path . $img ?>" />
-            </a>
+			</a>
+			
+			<div id="stats">
+				<div id="stats-innard">
+					<?php echo $info; ?>
+				</div>
+            </div>

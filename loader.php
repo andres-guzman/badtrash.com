@@ -164,7 +164,7 @@ function write_logfile($data, $output) {
 }
 ?>            
             <a class="count" href="javascript:;">
-                <img id="random-image" src="<?php echo $path . $img ?>" />
+                <img id="random-image" alt="Random!" src="<?php echo $path . $img ?>" />
 			</a>
 			
 			<div id="stats">

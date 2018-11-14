@@ -216,7 +216,7 @@
 					}
 				?>			
             <a class="count" href="javascript:;">
-                <img id="random-image" src="<?php echo $path . $img ?>" />
+                <img id="random-image" alt="Random!" src="<?php echo $path . $img ?>" />
 			</a>
 			<div id="stats">
 				<div id="stats-innard">
@@ -245,10 +245,13 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
 		<script src="js/trash.js"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92796003-1"></script>
 		<script>
-            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-            ga('create','UA-92796003-1','auto');ga('send','pageview')
-        </script>
-        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-92796003-1');
+			</script>
 	</body>
 </html>

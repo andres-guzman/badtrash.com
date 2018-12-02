@@ -162,6 +162,9 @@ main {
 
 #random-image {
     width: 100%;
+    color: #808da0;
+    font: 12px "Proxima Nova Regular", Arial, Helvetica, sans-serif;
+    text-decoration: none;
 }
 
 footer {

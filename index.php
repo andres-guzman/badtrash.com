@@ -46,7 +46,7 @@
 					</svg>
 				</a>
 
-			<h1>Badtrash is a simple image loader of over 5000 very stupid images.<br><span class="is-visible">Click</span><span class="is-hidden">Tap</span> the image to load more...</h1>
+			<h1>Badtrash is a simple random image loader of over 5000 very stupid images.<br><span class="is-visible">Click</span><span class="is-hidden">Tap</span> the image to load more...</h1>
 		</header>
 
         <main>

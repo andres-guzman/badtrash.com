@@ -252,6 +252,6 @@
 			gtag('js', new Date());
 
 			gtag('config', 'UA-92796003-1');
-			</script>
+		</script>
 	</body>
 </html>

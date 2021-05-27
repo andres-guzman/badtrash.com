@@ -20,13 +20,39 @@
     }
 }());
 
-/* fade out-in & ajax load */
-$(document).on('click', '.count', function () {
-    $("#random-image").fadeOut(360, function() {                   
-        $("main").load("loader.php");
-        console.log("random image loaded OK")
-    });    
+/* fade out and reload */
 
-    $($(this).attr('href'));
-        return false;
+$(document).on('click', '.count', function(e) {    
+    //var aLink = $(this).attr("href");
+
+    $("#random-image").fadeOut(560, function() {
+        $.get('index.php', function(data){
+            var $data= $(data);
+            $("#stats-outer").html($data.find('#stats'));
+            $(".count").html($data.find("#random-image"));
+        });
+    });
+
+    e.preventDefault();
 });
+
+/*
+			document.getElementById("button").addEventListener("click", function () {
+				var httpRequest = new XMLHttpRequest();
+				var images = document.getElementById("random-image");
+				var counter = document.getElementById("stats");
+
+				httpRequest.onreadystatechange = function (data) {
+					
+					if (httpRequest.readyState != 4 || httpRequest.status != 200) {
+						images.classList.add("fade--out");
+						document.getElementById("stats").innerHTML;
+						
+						console.log("success");
+					}
+				}
+
+				httpRequest.open("GET", "loader.php")
+				httpRequest.send()
+			});
+			*/

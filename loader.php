@@ -1,36 +1,13 @@
 <?php
-$root = '';
-$path = 'images/';
-function getImagesFromDir($path) {
-    $images = array();
-    if ( $img_dir = @opendir($path) ) {
-        while ( false !== ($img_file = readdir($img_dir)) ) {
-            if ( preg_match("/(\.gif|\.jpg|\.png|\.bmp|\.jpeg|\.JPEG|\.JPG|\.BMP|\.PNG|\.GIF)$/", $img_file) ) {
-                $images[] = $img_file;
-            }
-        }
-        closedir($img_dir);
-    }
-    return $images;
-}
-function getRandomFromArray($ar) {
-    mt_srand( (double)microtime() * 10 );
-    $num = array_rand($ar);
-    return $ar[$num];
-}
-$imgList = getImagesFromDir($root . $path);
-$img = getRandomFromArray($imgList);
-?>
-
-<?php
 $lf_name = "counter.txt";
 $monthly = 1;
 $monthly_path = "oldfiles";
 $type = 2;
-$beforeTotalText = "<span>Click counter: ";
-$beforeUniqueText = "Unique visits this month: ";
+$beforeTotalText = "Click counter: <span>";
+$beforeUniqueText = "Unique visits this month: <span>";
+$afterUniqueText = "</span>";
 $display = 1;
-$separator = "</span>  /  ";
+$separator = "</span>  —  ";
 $log_file = dirname(__FILE__) . '/' . $lf_name;
 
 if ($_GET['display'] == "true") {
@@ -98,7 +75,7 @@ if ($_GET['display'] == "true") {
 
 						$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs;
 					}
-					$info = $beforeTotalText . $totalHits . $separator . $beforeUniqueText . $uniqueHits;
+					$info = $beforeTotalText . $totalHits . $separator . $beforeUniqueText . $uniqueHits . $afterUniqueText;
 				}
 				write_logfile($toWrite, $info);
 			}
@@ -162,13 +139,34 @@ function write_logfile($data, $output) {
 		echo $output;
 	}
 }
-?>            
-            <a class="count" href="javascript:;">
-                <img id="random-image" alt="Random!" src="<?php echo $path . $img ?>" />
-			</a>
-			
-			<div id="stats">
-				<div id="stats-innard">
-					<?php echo $info; ?>
-				</div>
-            </div>
+?>
+
+<?php
+$root = '';
+$path = 'images/';
+function getImagesFromDir($path) {
+    $images = array();
+    if ( $img_dir = @opendir($path) ) {
+        while ( false !== ($img_file = readdir($img_dir)) ) {
+            if ( preg_match("/(\.gif|\.jpg|\.png|\.bmp|\.jpeg|\.JPEG|\.JPG|\.BMP|\.PNG|\.GIF)$/", $img_file) ) {
+                $images[] = $img_file;
+            }
+        }
+        closedir($img_dir);
+    }
+    return $images;
+}
+function getRandomFromArray($ar) {
+    mt_srand( (double)microtime() * 1000000 );
+    $num = array_rand($ar);
+    return $ar[$num];
+}
+$imgList = getImagesFromDir($root . $path);
+$img = getRandomFromArray($imgList);
+?>
+
+<div id="stats-outer"><p id="stats"><?php echo $info; ?></p></div>
+
+<a id="button" href="javascript:;">
+	<img id="random-image" alt="Totally random image" src="<?php echo $path . $img ?>" />
+</a>

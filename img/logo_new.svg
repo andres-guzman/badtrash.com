@@ -1,0 +1,20 @@
+<svg version="1.1" id="badtrash_outer" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 466.9 49" style="enable-background:new 0 0 466.9 49;" xml:space="preserve">
+	<g id="badtrash_version">
+		<path class="badtrash_fill" d="M406.3,40.3h2.5v2.5h1.2v1.2h1.2v-1.2h1.2v-2.5h2.5v2.5h-1.2v1.2h-1.2v1.2h-1.2v1.2H410v-1.2h-1.2v-1.2h-1.2v-1.2h-1.2 L406.3,40.3L406.3,40.3z"/>
+		<path class="badtrash_fill" d="M420,44.1h2.5v2.5H420V44.1z"/>
+		<path class="badtrash_fill" d="M432.4,37.8v7.5h2.5v1.2h-7.5v-1.2h2.5v-5h-1.2v-1.2h1.2v-1.2L432.4,37.8L432.4,37.8z"/>
+		<path class="badtrash_fill" d="M436.1,40.3h1.2v-1.2h1.2v-1.2h5v1.2h-3.7v1.2h-1.2v1.2h5v1.2h1.2v2.5h-1.2v1.2h-6.2v-1.2h-1.2L436.1,40.3L436.1,40.3z M438.6,42.8v2.5h3.7v-2.5H438.6z"/>
+		<path class="badtrash_fill" d="M446.1,40.3h1.2v-1.2h1.2v-1.2h5v1.2h-3.7v1.2h-1.2v1.2h5v1.2h1.2v2.5h-1.2v1.2h-6.2v-1.2h-1.2L446.1,40.3L446.1,40.3z M448.6,42.8v2.5h3.7v-2.5H448.6z"/>
+		<path class="badtrash_fill" d="M456.1,40.3h1.2v-1.2h1.2v-1.2h5v1.2h-3.7v1.2h-1.2v1.2h5v1.2h1.2v2.5h-1.2v1.2h-6.2v-1.2h-1.2L456.1,40.3L456.1,40.3z M458.6,42.8v2.5h3.7v-2.5H458.6z"/>
+	</g>
+	<g id="badtrash_logo">
+		<path class="badtrash_fill" d="M2,2.3h12.7V15H40v6.3h6.3v19H40v6.3H2V2.3z M14.7,21.3v19h19v-19H14.7z"/>
+		<path class="badtrash_fill" d="M52.6,21.3H59V15h38v31.6H59v-6.3h-6.3L52.6,21.3L52.6,21.3z M65.3,21.3v19h19v-19H65.3z"/>
+		<path class="badtrash_fill" d="M103.3,21.3h6.3V15h25.3V2.3h12.7v44.3h-38v-6.3h-6.3V21.3z M115.9,21.3v19h19v-19H115.9z"/>
+		<path class="badtrash_fill" d="M153.9,15h12.7V8.7h12.7V15h12.7v6.3h-12.7v19h6.3V34h12.7v6.3h-6.3v6.3h-19v-6.3h-6.3v-19h-12.7L153.9,15L153.9,15z"/>
+		<path class="badtrash_fill" d="M204.5,15h38v6.3h6.3v6.3h-12.7v-6.3h-19v25.3h-12.7V15z"/>
+		<path class="badtrash_fill" d="M255.1,21.3h6.3V15h38v31.6h-38v-6.3h-6.3L255.1,21.3L255.1,21.3z M267.8,21.3v19h19v-19H267.8z"/>
+		<path class="badtrash_fill" d="M305.8,40.3h25.3V34h-19v-6.3h-6.3v-6.3h6.3V15h31.6v6.3h-19v6.3h19V34h6.3v6.3h-6.3v6.3h-38L305.8,40.3L305.8,40.3z"/>
+		<path class="badtrash_fill" d="M356.4,2.3H369V15h25.3v6.3h6.3v25.3H388V21.3h-19v25.3h-12.7L356.4,2.3L356.4,2.3z"/>
+	</g>
+</svg>

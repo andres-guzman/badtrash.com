@@ -1,3 +1,169 @@
+<?php
+$lf_name = "counter.txt";
+$monthly = 1;
+$monthly_path = "oldfiles";
+$type = 2;
+$beforeTotalText = "Click counter: <span>";
+$beforeUniqueText = "Unique visits this month: <span>";
+$afterUniqueText = "</span>";
+$display = 1;
+$separator = "</span>  —  ";
+$log_file = dirname(__FILE__) . '/' . $lf_name;
+
+if ($_GET['display'] == "true") {
+	die("<pre>&#60;? include(\"" . dirname(__FILE__) . '/' . basename(__FILE__) . "\"); ?&#62;</pre>");
+
+} else {
+	$uIP = $_SERVER['REMOTE_ADDR'];
+
+	if (file_exists($log_file)) {
+		$log = file_get_contents($log_file);
+
+		if ($monthly) {
+			$prev_name = $monthly_path . '/' . date("n-Y", strtotime("-1 month")) . '.txt';
+			if (date('j') == 1 && !file_exists($prev_name)) {
+				if (!file_exists($monthly_path)) {
+					mkdir($monthly_path);
+				}
+
+				copy($log_file, $prev_name);
+
+				if ($type == 0) {
+
+					$toWrite = "1";
+					$info = $beforeTotalText . "1";
+				} else if ($type == 1) {
+
+					$toWrite = "1;" . $uIP . ",";
+					$info = $beforeUniqueText . "1";
+				} else if ($type == 2) {
+
+					$toWrite = "1;1;" . $uIP . ",";
+					$info = $beforeTotalText . "1" . $separator . $beforeUniqueText . "1";
+				}
+				write_logfile($toWrite, $info);
+
+			} else {
+				if ($type == 0) {
+					$toWrite = intval($log) + 1;
+					$info = $beforeTotalText . $toWrite;
+
+				} else if ($type == 1) {
+					$hits = reset(explode(";", $log));
+					$IPs = end(explode(";", $log));
+					$IPArray = explode(",", $IPs);
+
+					if (array_search($uIP, $IPArray, true) === false) {
+						$hits = intval($hits) + 1;
+						$toWrite = $hits . ";" . $IPs . $uIP . ",";
+					} else {
+						$toWrite = $log;
+					}
+					$info = $beforeUniqueText . $hits;
+
+				} else if ($type == 2) {
+					$pieces = explode(";", $log);
+					$totalHits = $pieces[0];
+					$uniqueHits = $pieces[1];
+					$IPs = $pieces[2];
+					$IPArray = explode(",", $IPs);
+					$totalHits = intval($totalHits) + 1;
+					if (array_search($uIP, $IPArray, true) === false) {
+						$uniqueHits = intval($uniqueHits) + 1;
+						$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs . $uIP . ",";
+					} else {
+
+						$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs;
+					}
+					$info = $beforeTotalText . $totalHits . $separator . $beforeUniqueText . $uniqueHits . $afterUniqueText;
+				}
+				write_logfile($toWrite, $info);
+			}
+		} else {
+			if ($type == 0) {
+				$toWrite = intval($log) + 1;
+				$info = $beforeTotalText . $toWrite;
+
+			} else if ($type == 1) {
+				$hits = reset(explode(";", $log));
+				$IPs = end(explode(";", $log));
+				$IPArray = explode(",", $IPs);
+				if (array_search($uIP, $IPArray, true) === false) {
+					$hits = intval($hits) + 1;
+					$toWrite = $hits . ";" . $IPs . $uIP . ",";
+				} else {
+					$toWrite = $log;
+				}
+
+				$info = $beforeUniqueText . $hits;
+
+			} else if ($type == 2) {
+				$pieces = explode(";", $log);
+				$totalHits = $pieces[0];
+				$uniqueHits = $pieces[1];
+				$IPs = $pieces[2];
+				$IPArray = explode(",", $IPs);
+				$totalHits = intval($totalHits) + 1;
+				if (array_search($uIP, $IPArray, true) === false) {
+					$uniqueHits = intval($uniqueHits) + 1;
+					$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs . $uIP . ",";
+				} else {
+
+					$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs;
+				}
+				$info = $beforeTotalText . $totalHits . $separator . $beforeUniqueText . $uniqueHits;
+			}
+			write_logfile($toWrite, $info);
+		}
+	} else {
+		$fp = fopen($log_file, "w");
+		fclose($fp);
+		if ($type == 0) {
+			$toWrite = "1";
+			$info = $beforeTotxalText . "1";
+		} else if ($type == 1) {
+			$toWrite = "1;" . $uIP . ",";
+			$info = $beforeUniqueText . "1";
+		} else if ($type == 2) {
+			$toWrite = "1;1;" . $uIP . ",";
+			$info = $beforeTotalText . "1" . $separator . $beforeUniqueText . "1";
+		}
+		write_logfile($toWrite, $info);
+	}
+}
+
+function write_logfile($data, $output) {
+	global $log_file;
+	file_put_contents($log_file, $data);
+	if ($display == 1) {
+		echo $output;
+	}
+}
+?>
+
+<?php
+$root = '';
+$path = 'images/';
+function getImagesFromDir($path) {
+    $images = array();
+    if ( $img_dir = @opendir($path) ) {
+        while ( false !== ($img_file = readdir($img_dir)) ) {
+            if ( preg_match("/(\.gif|\.jpg|\.png|\.bmp|\.jpeg|\.JPEG|\.JPG|\.BMP|\.PNG|\.GIF)$/", $img_file) ) {
+                $images[] = $img_file;
+            }
+        }
+        closedir($img_dir);
+    }
+    return $images;
+}
+function getRandomFromArray($ar) {
+    mt_srand( (double)microtime() * 1000000 );
+    $num = array_rand($ar);
+    return $ar[$num];
+}
+$imgList = getImagesFromDir($root . $path);
+$img = getRandomFromArray($imgList);
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -9,249 +175,85 @@
 		<link rel="manifest" href="site.webmanifest"> 
 		<link rel="apple-touch-icon" href="icon.png">
 		<link rel="icon" type="image/png" href="favicon.png">
-        <link rel="stylesheet" href="css/badtrash.css">
+		<style>@font-face{font-family:Jet;src:url(css/fonts/jetbrains/JetBrainsMono-Regular.woff2) format('woff2'),url(css/fonts/jetbrains/JetBrainsMono-Regular.woff) format('woff');font-weight:400;font-style:normal;font-display:swap}::selection{background:#fe0f4d;color:#fff}::-moz-selection{background:#fe0f4d;color:#fff}html{height:100%}body{line-height:1;height:100vh;background-color:#1a1b1e;padding:45px;box-sizing:border-box;cursor:url(img/cursor_default.svg) 0 0,auto}body *,body ::after,body ::before{cursor:inherit}a{cursor:url(img/cursor_pointer.svg) 0 0,pointer}#container,main{display:grid;box-sizing:border-box}#container{grid-template-columns:1fr 2fr;max-width:100vw;height:100%;border:1px solid #444}main{justify-content:center;align-content:space-between;transition:all .65s ease 0s;padding:45px}#stats,body{margin:0}#stats,footer p,header p{color:rgba(255, 255, 255, 0.4);;font:13px/22px Jet,Arial,Helvetica,sans-serif}#logo,footer p,header,header p{transition:all .65s ease 0s}#logo{display:block;width:65%;margin:0 0 30px;outline:0}.badtrash_fill{fill:#fff;transition:fill .45s ease 0s}#logo:hover .badtrash_fill{fill:#fe0f4d}footer p,header p{margin:0 0 26px}header .p-white{color:#fff;margin-bottom:0}footer p{margin:0}#stats span,footer a{color:#fff}footer a:hover{color:#fe0f4d}#image-panel{display:flex;align-items:center;justify-content:center;background-color:#dedede;box-sizing:border-box;position:relative;overflow:hidden}#button{display:block;min-width:40px;min-height:40px;background-image:url(img/preloader.svg);background-position:center;background-repeat:no-repeat;outline:0}footer a{transition:all .35s ease 0s}#random-image{display:block;position:absolute;right:0;bottom:0;left:50%;min-height:60px;min-width:60px;max-height:100%;max-width:100%;top:50%;box-sizing:border-box;transform:translate(-50%,-50%);border:8px solid #dedede;box-shadow:0 0 15px rgba(166,166,166,.5);transition:border-color 360ms ease 0s}#random-image:hover{border-color:#fff}.is-visible{display:none}#badtrash_version{display:none}@media screen and (max-width:1300px),screen and (max-height:600px){body{height:auto}body,main{padding:15px}#logo{width:50vw;margin:0 auto 15px}header p{text-align:center;margin-bottom:15px}#stats-outer,footer{display:none}#container{display:block;border:none}#image-panel{overflow:visible;background-color:unset;align-items:flex-start}#random-image{position:relative;right:unset;top:unset;left:unset;bottom:unset;transform:unset}.p-white{display:none}.is-visible{color:#fff;display:block}}footer {position: relative;}#cookie--notice {position: absolute;top: -70px;}</style>
     </head>
 
-	<body>		
-		<header>
-			<a id="logo" href="./">				
-				<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 870 625" style="enable-background:new 0 0 870 625;" xml:space="preserve">
-					<g id="Layer_1_1_">
-						<g>
-							<circle cx="435" cy="224" r="223.5"/>
-							<path class="logo-thunder" d="M403.1,443.1l14.1-113.2c0.3-2.3-1.5-4.4-3.9-4.4h-31.6c-2.3,0-4.1-2-3.9-4.3l16-149.2c0.2-2,1.9-3.5,3.9-3.5
-									h90.5c2.6,0,4.5,2.6,3.7,5.1l-30.5,98.2c-0.8,2.5,1.1,5.1,3.7,5.1H510c3.1,0,5,3.4,3.3,6l-103,162.8
-									C408.1,449.2,402.6,447.3,403.1,443.1z"/>
+	<body>
+		<div id="container">
+			<main>
+				<div id="stats-outer"><p id="stats"><?php echo $info; ?></p></div>
+
+				<header>
+					<a id="logo" href="./">				
+						<svg version="1.1" id="badtrash_outer" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 402 49" style="enable-background:new 0 0 466.9 49;" xml:space="preserve">
+							<g id="badtrash_version">
+								<path class="badtrash_fill" d="M406.3,40.3h2.5v2.5h1.2v1.2h1.2v-1.2h1.2v-2.5h2.5v2.5h-1.2v1.2h-1.2v1.2h-1.2v1.2H410v-1.2h-1.2v-1.2h-1.2v-1.2h-1.2 L406.3,40.3L406.3,40.3z"/>
+								<path class="badtrash_fill" d="M420,44.1h2.5v2.5H420V44.1z"/>
+								<path class="badtrash_fill" d="M432.4,37.8v7.5h2.5v1.2h-7.5v-1.2h2.5v-5h-1.2v-1.2h1.2v-1.2L432.4,37.8L432.4,37.8z"/>
+								<path class="badtrash_fill" d="M436.1,40.3h1.2v-1.2h1.2v-1.2h5v1.2h-3.7v1.2h-1.2v1.2h5v1.2h1.2v2.5h-1.2v1.2h-6.2v-1.2h-1.2L436.1,40.3L436.1,40.3z M438.6,42.8v2.5h3.7v-2.5H438.6z"/>
+								<path class="badtrash_fill" d="M446.1,40.3h1.2v-1.2h1.2v-1.2h5v1.2h-3.7v1.2h-1.2v1.2h5v1.2h1.2v2.5h-1.2v1.2h-6.2v-1.2h-1.2L446.1,40.3L446.1,40.3z M448.6,42.8v2.5h3.7v-2.5H448.6z"/>
+								<path class="badtrash_fill" d="M456.1,40.3h1.2v-1.2h1.2v-1.2h5v1.2h-3.7v1.2h-1.2v1.2h5v1.2h1.2v2.5h-1.2v1.2h-6.2v-1.2h-1.2L456.1,40.3L456.1,40.3z M458.6,42.8v2.5h3.7v-2.5H458.6z"/>
 							</g>
-							<g>
-								<path class="logo-text" d="M5.4,604.6v-96h54.4c19.2,0,28.1,12.4,28.1,24.5c0,12-7.3,20-16.4,22c10.2,1.6,18.3,11.4,18.3,23.5
-									c0,14-9.4,26.1-28.2,26.1L5.4,604.6L5.4,604.6z M62.7,537.7c0-4.6-3.5-7.5-8.5-7.5h-24v15h24C59.3,545.2,62.7,542.4,62.7,537.7z
-									M64.6,574.8c0-4.8-3.5-8.1-9.5-8.1H30.2V583h24.9C61,583,64.6,580,64.6,574.8z"/>
-								<path class="logo-text" d="M183,604.6l-4.8-13.8h-37.9l-4.8,13.8h-28.1l36.1-96h31.2l36.1,96H183z M159.3,533.1l-12.2,36.1h24.3
-									L159.3,533.1z"/>
-								<path class="logo-text" d="M232.5,604.6v-96h40.3c30.2,0,52,18.1,52,48c0,29.8-21.7,48.1-51.8,48.1L232.5,604.6L232.5,604.6z
-									M299.5,556.5c0-14.8-8.9-26.4-26.5-26.4h-15.7V583h15.6C289.7,583,299.5,570.8,299.5,556.5z"/>
-								<path class="logo-text" d="M369.9,604.6v-74.4H343v-21.6h78.5v21.6h-26.8v74.4H369.9z"/>
-								<path class="logo-text" d="M501.2,604.6l-16.1-32.3h-12.7v32.3h-24.8v-96h48.1c21.3,0,33.4,14.1,33.4,32c0,16.7-10.1,25.6-19.2,28.8
-									l19.6,35.3L501.2,604.6L501.2,604.6z M503.9,540.4c0-6.6-5.3-10.2-12-10.2h-19.6v20.6H492C498.6,550.8,503.9,547.2,503.9,540.4z"
-									/>
-								<path class="logo-text" d="M622.4,604.6l-4.8-13.8h-37.9l-4.8,13.8H547l36.1-96h31.2l36.1,96H622.4z M598.8,533.1l-12.2,36.1h24.3
-									L598.8,533.1z"/>
-								<path class="logo-text" d="M664.5,591.1l13.1-19.3c6.9,6.9,17.6,12.7,30.8,12.7c8.4,0,13.5-2.9,13.5-7.6c0-12.7-54.3-2.2-54.3-39.2
-									c0-16.1,13.5-30.5,38.2-30.5c15.4,0,28.8,4.6,39,13.4l-13.5,18.6c-8.1-6.8-18.6-10.1-28.1-10.1c-7.2,0-10.4,2.4-10.4,6.6
-									c0,11.8,54.3,2.9,54.3,38.6c0,19.3-14.3,32.1-40,32.1C687.7,606.4,674.1,600.2,664.5,591.1z"/>
-								<path class="logo-text" d="M837.7,604.6V566h-39.9v38.6H773v-96h24.8v35.9h39.9v-35.9h24.8v96H837.7z"/>
+							<g id="badtrash_logo">
+								<path class="badtrash_fill" d="M2,2.3h12.7V15H40v6.3h6.3v19H40v6.3H2V2.3z M14.7,21.3v19h19v-19H14.7z"/>
+								<path class="badtrash_fill" d="M52.6,21.3H59V15h38v31.6H59v-6.3h-6.3L52.6,21.3L52.6,21.3z M65.3,21.3v19h19v-19H65.3z"/>
+								<path class="badtrash_fill" d="M103.3,21.3h6.3V15h25.3V2.3h12.7v44.3h-38v-6.3h-6.3V21.3z M115.9,21.3v19h19v-19H115.9z"/>
+								<path class="badtrash_fill" d="M153.9,15h12.7V8.7h12.7V15h12.7v6.3h-12.7v19h6.3V34h12.7v6.3h-6.3v6.3h-19v-6.3h-6.3v-19h-12.7L153.9,15L153.9,15z"/>
+								<path class="badtrash_fill" d="M204.5,15h38v6.3h6.3v6.3h-12.7v-6.3h-19v25.3h-12.7V15z"/>
+								<path class="badtrash_fill" d="M255.1,21.3h6.3V15h38v31.6h-38v-6.3h-6.3L255.1,21.3L255.1,21.3z M267.8,21.3v19h19v-19H267.8z"/>
+								<path class="badtrash_fill" d="M305.8,40.3h25.3V34h-19v-6.3h-6.3v-6.3h6.3V15h31.6v6.3h-19v6.3h19V34h6.3v6.3h-6.3v6.3h-38L305.8,40.3L305.8,40.3z"/>
+								<path class="badtrash_fill" d="M356.4,2.3H369V15h25.3v6.3h6.3v25.3H388V21.3h-19v25.3h-12.7L356.4,2.3L356.4,2.3z"/>
 							</g>
-						</g>
-					</svg>
+						</svg>
+					</a>
+					
+					<p>This website randomly loads dumb & funny images to pass the time. Created in 2009, there are over 5.000 images and more are being added all the time.</p>
+					<p class="p-white">Click the image to load more... →</p>
+					<p class="is-visible">Tap the image to load more... ↓</p>
+				</header>
+
+				<footer>
+					<p id="cookie--notice">This website uses cookies to count visits, that is all, no third parties involved. <a id="cookie--close" href="javascript:;">(X) Close this notice.</a></p>
+					<p>© <?php echo date("Y"); ?> Some Rights Reserved. Just kidding. This website was created by <a href="https://twitter.com/methplace">Andres</a>, who also did <a href="http://www.simpshots.com/">The Simpsons.</a></p>
+				</footer>
+			</main>
+
+			<div id="image-panel">
+				<a id="button" href="javascript:;">
+					<img id="random-image" alt="Totally random image" src="<?php echo $path . $img ?>" />
 				</a>
-
-			<h1>Badtrash is a simple random image loader of over 5000 very stupid images.<br><span class="is-visible">Click</span><span class="is-hidden">Tap</span> the image to load more...</h1>
-		</header>
-
-        <main>
-			<?php
-				$root = '';
-				$path = 'images/';
-				function getImagesFromDir($path) {
-					$images = array();
-					if ( $img_dir = @opendir($path) ) {
-						while ( false !== ($img_file = readdir($img_dir)) ) {
-							if ( preg_match("/(\.gif|\.jpg|\.png|\.bmp|\.jpeg|\.JPEG|\.JPG|\.BMP|\.PNG|\.GIF)$/", $img_file) ) {
-								$images[] = $img_file;
-							}
-						}
-						closedir($img_dir);
-					}
-					return $images;
-				}
-				function getRandomFromArray($ar) {
-					mt_srand( (double)microtime() * 10 );
-					$num = array_rand($ar);
-					return $ar[$num];
-				}
-				$imgList = getImagesFromDir($root . $path);
-				$img = getRandomFromArray($imgList);
-				?>
-
-				<?php
-				$lf_name = "counter.txt";
-				$monthly = 1;
-				$monthly_path = "oldfiles";
-				$type = 2;
-				$beforeTotalText = "<span>Click counter: ";
-				$beforeUniqueText = "Unique visits this month: ";
-				$display = 1;
-				$separator = "</span>  /  ";
-				$log_file = dirname(__FILE__) . '/' . $lf_name;
-
-				if ($_GET['display'] == "true") {
-					die("<pre>&#60;? include(\"" . dirname(__FILE__) . '/' . basename(__FILE__) . "\"); ?&#62;</pre>");
-
-				} else {
-					$uIP = $_SERVER['REMOTE_ADDR'];
-
-					if (file_exists($log_file)) {
-						$log = file_get_contents($log_file);
-
-						if ($monthly) {
-							$prev_name = $monthly_path . '/' . date("n-Y", strtotime("-1 month")) . '.txt';
-							if (date('j') == 1 && !file_exists($prev_name)) {
-								if (!file_exists($monthly_path)) {
-									mkdir($monthly_path);
-								}
-
-								copy($log_file, $prev_name);
-
-								if ($type == 0) {
-
-									$toWrite = "1";
-									$info = $beforeTotalText . "1";
-								} else if ($type == 1) {
-
-									$toWrite = "1;" . $uIP . ",";
-									$info = $beforeUniqueText . "1";
-								} else if ($type == 2) {
-
-									$toWrite = "1;1;" . $uIP . ",";
-									$info = $beforeTotalText . "1" . $separator . $beforeUniqueText . "1";
-								}
-								write_logfile($toWrite, $info);
-
-							} else {
-								if ($type == 0) {
-									$toWrite = intval($log) + 1;
-									$info = $beforeTotalText . $toWrite;
-
-								} else if ($type == 1) {
-									$hits = reset(explode(";", $log));
-									$IPs = end(explode(";", $log));
-									$IPArray = explode(",", $IPs);
-
-									if (array_search($uIP, $IPArray, true) === false) {
-										$hits = intval($hits) + 1;
-										$toWrite = $hits . ";" . $IPs . $uIP . ",";
-									} else {
-										$toWrite = $log;
-									}
-									$info = $beforeUniqueText . $hits;
-
-								} else if ($type == 2) {
-									$pieces = explode(";", $log);
-									$totalHits = $pieces[0];
-									$uniqueHits = $pieces[1];
-									$IPs = $pieces[2];
-									$IPArray = explode(",", $IPs);
-									$totalHits = intval($totalHits) + 1;
-									if (array_search($uIP, $IPArray, true) === false) {
-										$uniqueHits = intval($uniqueHits) + 1;
-										$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs . $uIP . ",";
-									} else {
-
-										$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs;
-									}
-									$info = $beforeTotalText . $totalHits . $separator . $beforeUniqueText . $uniqueHits;
-								}
-								write_logfile($toWrite, $info);
-							}
-						} else {
-							if ($type == 0) {
-								$toWrite = intval($log) + 1;
-								$info = $beforeTotalText . $toWrite;
-
-							} else if ($type == 1) {
-								$hits = reset(explode(";", $log));
-								$IPs = end(explode(";", $log));
-								$IPArray = explode(",", $IPs);
-								if (array_search($uIP, $IPArray, true) === false) {
-									$hits = intval($hits) + 1;
-									$toWrite = $hits . ";" . $IPs . $uIP . ",";
-								} else {
-									$toWrite = $log;
-								}
-
-								$info = $beforeUniqueText . $hits;
-
-							} else if ($type == 2) {
-								$pieces = explode(";", $log);
-								$totalHits = $pieces[0];
-								$uniqueHits = $pieces[1];
-								$IPs = $pieces[2];
-								$IPArray = explode(",", $IPs);
-								$totalHits = intval($totalHits) + 1;
-								if (array_search($uIP, $IPArray, true) === false) {
-									$uniqueHits = intval($uniqueHits) + 1;
-									$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs . $uIP . ",";
-								} else {
-
-									$toWrite = $totalHits . ";" . $uniqueHits . ";" . $IPs;
-								}
-								$info = $beforeTotalText . $totalHits . $separator . $beforeUniqueText . $uniqueHits;
-							}
-							write_logfile($toWrite, $info);
-						}
-					} else {
-						$fp = fopen($log_file, "w");
-						fclose($fp);
-						if ($type == 0) {
-							$toWrite = "1";
-							$info = $beforeTotxalText . "1";
-						} else if ($type == 1) {
-							$toWrite = "1;" . $uIP . ",";
-							$info = $beforeUniqueText . "1";
-						} else if ($type == 2) {
-							$toWrite = "1;1;" . $uIP . ",";
-							$info = $beforeTotalText . "1" . $separator . $beforeUniqueText . "1";
-						}
-						write_logfile($toWrite, $info);
-					}
-				}
-
-					function write_logfile($data, $output) {
-						global $log_file;
-						file_put_contents($log_file, $data);
-						if ($display == 1) {
-							echo $output;
-						}
-					}
-				?>			
-            <a class="count" href="javascript:;">
-                <img id="random-image" alt="Random!" src="<?php echo $path . $img ?>" />
-			</a>
-			<div id="stats">
-				<div id="stats-innard">
-					<?php echo $info; ?>
-				</div>
-            </div>
-		</main>
-
-        <footer>
-			<div class="copy">© <?php echo date("Y") ?> Some Rights Reserved. Only joking. This website was <a href="https://twitter.com/__oily">created by this guy</a>.</div>
-			<div class="server-info">
-				<?php
-					$ip = $_SERVER['REMOTE_ADDR'];
-					$browser = $_SERVER['HTTP_USER_AGENT'];
-					$referrer = $_SERVER['HTTP_REFERER'];
-						if ($referred == "") {
-						  $referrer = "This page was accessed directly";
-						}
-					echo "Visitor IP address: " . $ip . "<br/>";
-					echo "Browser (User Agent) Info: " . $browser . "<br/>";
-					echo "Referrer: " . $referrer . "<br/>";
-				?>
 			</div>
-        </footer>
-
+		</div>
+        
+		
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
-		<script src="js/trash.js"></script>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92796003-1"></script>
+		<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+		
+		
+		<script>
+			$(document).on('click', '#button', function(e) {
+				$("#random-image").fadeOut(480, function() {
+					$.get('loader.php', function(data){
+						var $data= $(data);
+						$("#stats-outer").html($data.find('#stats'));
+						$("#button").html($data.find("#random-image"));
+					});
+				});	
+				e.preventDefault();
+			});
+
+			$("#cookie--close").click(function(){
+				$("#cookie--notice").remove();
+			});
+		</script>
+		
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ48H87T7P"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
 
-			gtag('config', 'UA-92796003-1');
-		</script>
+			gtag('config', 'G-LQ48H87T7P');
+		</script>		
 	</body>
 </html>

@@ -213,7 +213,7 @@ $img = getRandomFromArray($imgList);
 				</header>
 
 				<footer>
-					<p id="cookie--notice">This website uses cookies to count visits, that is all, no third parties involved. <a id="cookie--close" href="javascript:;">(X) Close this notice.</a></p>
+					<p id="cookie--notice">This website uses cookies 🍪 to count visits, that is all, no third parties involved. <a id="cookie--close" href="javascript:;">(X) Close this notice.</a></p>
 					<p>© <?php echo date("Y"); ?> Some Rights Reserved. Just kidding. This website was created by <a href="https://twitter.com/methplace">Andres</a>, who also did <a href="http://www.simpshots.com/">The Simpsons.</a></p>
 				</footer>
 			</main>

@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_WARNING);
 $lf_name = "counter.txt";
 $monthly = 1;
 $monthly_path = "oldfiles";
@@ -157,7 +159,7 @@ function getImagesFromDir($path) {
     return $images;
 }
 function getRandomFromArray($ar) {
-    mt_srand( (double)microtime() * 1000000 );
+    //mt_srand( (double)microtime() * 1000000 );
     $num = array_rand($ar);
     return $ar[$num];
 }
@@ -179,7 +181,8 @@ $img = getRandomFromArray($imgList);
 		<meta property="og:image" content="http://www.badtrash.com/badtrash.jpg">
 		<link rel="apple-touch-icon" href="icon.png">
 		<link rel="icon" type="image/png" href="favicon.png">
-		<style>@font-face{font-family:Jet;src:url(css/fonts/jetbrains/JetBrainsMono-Regular.woff2) format('woff2'),url(css/fonts/jetbrains/JetBrainsMono-Regular.woff) format('woff');font-weight:400;font-style:normal;font-display:swap}::selection{background:#fe0f4d;color:#fff}::-moz-selection{background:#fe0f4d;color:#fff}html{height:100%}body{line-height:1;height:100vh;background-color:#1a1b1e;padding:45px;box-sizing:border-box;cursor:url(img/cursor_default.svg) 0 0,auto}body *,body ::after,body ::before{cursor:inherit}a{cursor:url(img/cursor_pointer.svg) 0 0,pointer}#container,main{display:grid;box-sizing:border-box}#container{grid-template-columns:1fr 2fr;max-width:100vw;height:100%;border:1px solid #444}main{justify-content:center;align-content:space-between;transition:all .65s ease 0s;padding:45px}#stats,body{margin:0}#stats,footer p,header p{color:rgba(255, 255, 255, 0.4);;font:13px/22px Jet,Arial,Helvetica,sans-serif}#logo,footer p,header,header p{transition:all .65s ease 0s}#logo{display:block;width:65%;margin:0 0 30px;outline:0}.badtrash_fill{fill:#fff;transition:fill .45s ease 0s}#logo:hover .badtrash_fill{fill:#fe0f4d}footer p,header p{margin:0 0 26px}header .p-white{color:#fff;margin-bottom:0}footer p{margin:0}#stats span,footer a{color:#fff}footer a:hover{color:#fe0f4d}#image-panel{display:flex;align-items:center;justify-content:center;background-color:#dedede;box-sizing:border-box;position:relative;overflow:hidden}#button{display:block;min-width:40px;min-height:40px;background-image:url(img/preloader.svg);background-position:center;background-repeat:no-repeat;outline:0}footer a{transition:all .35s ease 0s}#random-image{display:block;position:absolute;right:0;bottom:0;left:50%;min-height:60px;min-width:60px;max-height:100%;max-width:100%;top:50%;box-sizing:border-box;transform:translate(-50%,-50%);border:8px solid #dedede;box-shadow:0 0 15px rgba(166,166,166,.5);transition:border-color 360ms ease 0s}#random-image:hover{border-color:#fff}.is-visible{display:none}#badtrash_version{display:none}@media screen and (max-width:1300px),screen and (max-height:600px){body{height:auto}body,main{padding:15px}#logo{width:50vw;margin:0 auto 15px}header p{text-align:center;margin-bottom:15px}#stats-outer,footer{display:none}#container{display:block;border:none}#image-panel{overflow:visible;background-color:unset;align-items:flex-start}#random-image{position:relative;right:unset;top:unset;left:unset;bottom:unset;transform:unset}.p-white{display:none}.is-visible{color:#fff;display:block}}footer {position: relative;}</style>
+		<style>@font-face{font-family:Jet;src:url(css/fonts/jetbrains/JetBrainsMono-Regular.woff2) format('woff2'),url(css/fonts/jetbrains/JetBrainsMono-Regular.woff) format('woff');font-weight:400;font-style:normal;font-display:swap}::selection{background:#fe0f4d;color:#fff}::-moz-selection{background:#fe0f4d;color:#fff}@keyframes fadeOut{from{opacity:1}to{opacity:0}}.fade--out{animation-name:fadeOut;animation-duration:.45s;animation-fill-mode:forwards;animation-iteration-count:1;animation-timing-function:linear}html{height:100%}body{line-height:1;height:100vh;background-color:#1a1b1e;padding:45px;box-sizing:border-box;cursor:url(img/cursor_default.svg) 0 0,auto}body *,body ::after,body ::before{cursor:inherit}a{cursor:url(img/cursor_pointer.svg) 0 0,pointer}#container,main{display:grid;box-sizing:border-box}#container{grid-template-columns:1fr 2fr;max-width:100vw;height:100%;border:1px solid #444}main{justify-content:center;align-content:space-between;transition:all .65s ease 0s;padding:45px}#stats,body{margin:0}#stats,footer p,header p{color:#6a6a6a;font:12px/20px Jet,Arial,Helvetica,sans-serif}#logo,footer p,header,header p{transition:all .65s ease 0s}#logo{display:block;width:65%;margin:0 0 30px;outline:0}.badtrash_fill{fill:#fff;transition:fill .45s ease 0s}#logo:hover .badtrash_fill{fill:#fe0f4d}footer p,header p{margin:0 0 26px}header .p-white{color:#fff;margin-bottom:0}footer p{margin:0}#stats span,footer a{color:#fff}footer a:hover{color:#fe0f4d}#image-panel{display:flex;align-items:center;justify-content:center;background-color:#dedede;box-sizing:border-box;position:relative;overflow:hidden}#button{display:block;min-width:40px;min-height:40px;background-image:url(img/preloader.svg);background-position:center;background-repeat:no-repeat;outline:0}footer a{transition:all .35s ease 0s}#random-image{display:block;position:absolute;right:0;bottom:0;left:50%;min-height:60px;min-width:60px;max-height:100%;max-width:100%;top:50%;box-sizing:border-box;transform:translate(-50%,-50%);border:8px solid #dedede;box-shadow:0 0 15px rgba(166,166,166,.5);transition:border-color 360ms ease 0s}#random-image:hover{border-color:#fff}.is-visible{display:none}@media screen and (max-width:940px){body{height:auto}body,main{padding:15px}#logo{width:50vw;margin:0 auto 15px}header p{text-align:center;margin-bottom:15px}#stats-outer,footer{display:none}#container{grid-template-columns:none;grid-template-rows:1fr 3fr}#image-panel{overflow:visible;background-color:unset}#random-image{position:relative;right:unset;top:unset;left:unset;bottom:unset;transform:unset}.p-white{display:none}.is-visible{color:#fff;display:block}}</style>
+		<!-- <link rel="stylesheet" href="css/badtrash.css"> -->
     </head>
 
 	<body>
@@ -217,33 +220,56 @@ $img = getRandomFromArray($imgList);
 				</header>
 
 				<footer>					
-					<p>© <?php echo date("Y"); ?> Some Rights Reserved. Just kidding. This website was created by <a href="https://twitter.com/__mookid">Andres</a>, who also did <a href="http://www.simpshots.com/">The Simpsons.</a></p>
+					<p>© <?php echo date("Y"); ?> Some Rights Reserved. Just kidding. This website was created by <a href="https://twitter.com/__mookid__">@__mookid__</a>, who also did <a href="http://www.randomImage.com/">The Simpsons.</a></p>
 				</footer>
 			</main>
 
 			<div id="image-panel">
-				<a id="button" href="javascript:;">
+				<a id="button">
 					<img id="random-image" alt="Totally random image" src="<?php echo $path . $img ?>" />
 				</a>
 			</div>
 		</div>
         
 		
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
-		<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+		<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script> -->
+		<!-- <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script> -->
 		
 		
 		<script>
-			$(document).on('click', '#button', function(e) {
-				$("#random-image").fadeOut(480, function() {
-					$.get('loader.php', function(data){
-						var $data= $(data);
-						$("#stats-outer").html($data.find('#stats'));
-						$("#button").html($data.find("#random-image"));
-					});
-				});	
+			// $(document).on('click', '#button', function(e) {
+			// 	$("#random-image").addClass("fade--out");
+			// 	$.get('loader.php', function(data){
+			// 		var $data= $(data);
+			// 		$("#stats-outer").html($data.find('#stats'));
+			// 		$("#button").html($data.find("#random-image"));
+			// 	});
+			// 	e.preventDefault();
+			// });
+
+			button.addEventListener('click', function(e) {
 				e.preventDefault();
+				var randomImage = document.querySelector('#random-image');
+				randomImage.classList.add('fade--out');
+
+				randomImage.addEventListener("animationend", () => {
+					var xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4 && xhr.status === 200) {
+							var parser = new DOMParser();
+							var htmlDoc = parser.parseFromString(xhr.responseText, 'text/html');
+							var stats = htmlDoc.querySelector('#stats');
+							var newRandomImage = htmlDoc.querySelector('#random-image');
+							document.querySelector('#stats-outer').innerHTML = stats.outerHTML;
+							document.querySelector('#button').innerHTML = newRandomImage.outerHTML;
+						}
+					};
+					xhr.open('GET', 'loader.php', true);
+					xhr.send();
+				});
 			});
+
+
 		</script>
 		
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ48H87T7P"></script>

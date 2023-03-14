@@ -157,7 +157,7 @@ function getImagesFromDir($path) {
     return $images;
 }
 function getRandomFromArray($ar) {
-    mt_srand( (double)microtime() * 1000000 );
+    // mt_srand( (double)microtime() * 1000000 );
     $num = array_rand($ar);
     return $ar[$num];
 }
@@ -167,6 +167,6 @@ $img = getRandomFromArray($imgList);
 
 <div id="stats-outer"><p id="stats"><?php echo $info; ?></p></div>
 
-<a id="button" href="javascript:;">
+<a id="button">
 	<img id="random-image" alt="Totally random image" src="<?php echo $path . $img ?>" />
 </a>

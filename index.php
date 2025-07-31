@@ -260,7 +260,7 @@ $img = getRandomFromArray($imgList);
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
 
-			gtag('config', 'G-LQ48H87T7P');
+			gtag('config', '');
 		</script>		
 	</body>
 </html>
